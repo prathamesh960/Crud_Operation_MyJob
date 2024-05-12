@@ -1,15 +1,5 @@
-import { useState } from "react";
-
-// Define an interface to represent validation error messages
-interface ValidationErrors {
-  [key: string]: string;
-}
-
 // Custom hook for handling validation logic
 const useValidation = () => {
-  // Define regular expressions and constants for validation
-  const allowedExtensionsRegex: RegExp = /^.*\.(doc|pdf)$/i;
-  const maxSizeInBytes: number = 1 * 1024 * 1024; // 1 MB
 
   // Function to handle validation events based on provided id and value
   const eventHandler = (id: string, val: string | File): string => {
