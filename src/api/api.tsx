@@ -1,9 +1,11 @@
 import axios from "axios";
+
 const BASE_URL = "http://localhost:4000";
 
-// axios is third party lib which used to communicate with server.
-const getinitialized = (contentType: string, token?: string, params?: any) => {
-  let api = axios.create({
+// Create an Axios instance with custom configurations
+const getInitialized = (contentType: string, token?: string, params?: any) => {
+  return axios.create({
+    baseURL: BASE_URL, // Set the base URL for all requests
     params: params ? params : undefined,
     headers: {
       "Content-Type": contentType ? contentType : "application/json",
@@ -11,45 +13,53 @@ const getinitialized = (contentType: string, token?: string, params?: any) => {
       "Bearer-Token": token ? token : "",
     },
   });
-  return api;
 };
 
 // GET request
-export const getRequest = (url: any, contentType: any) => {
-  return getinitialized(contentType)
-    .get(url, contentType)
+export const getRequest = (url: string, contentType: string) => {
+  return getInitialized(contentType)
+    .get(url)
     .catch((error: any) => {
       console.log(error);
     });
 };
 
 // GET request by ID
-export const getRequestById = (url: any, id: any, contentType: any) => {
+export const getRequestById = (
+  url: string,
+  id: string,
+  contentType: string
+) => {
   const updatedUrl = `${url}/${id}`;
-  return getinitialized(contentType)
-    .get(updatedUrl, contentType)
+  return getInitialized(contentType)
+    .get(updatedUrl)
     .catch((error: any) => {
       console.log(error);
     });
 };
 
+// GET request with parameters
 export const getRequestByParams = (
-  url: any,
-  id: any,
-  contentType?: any,
+  url: string,
+  id: string,
+  contentType: string,
   params?: any
 ) => {
   const updatedUrl = `${url}/${id}`;
-  return getinitialized(contentType, '', params)
-    .get(updatedUrl, contentType)
+  return getInitialized(contentType, '', params)
+    .get(updatedUrl)
     .catch((error: any) => {
       console.log(error);
     });
 };
 
 // POST request
-export const postrequestMethod = (url: any, contentType: any, data: any) => {
-  return getinitialized(contentType)
+export const postRequestMethod = (
+  url: string,
+  contentType: string,
+  data: any
+) => {
+  return getInitialized(contentType)
     .post(url, data)
     .catch((error: any) => {
       console.log(error);
@@ -58,28 +68,29 @@ export const postrequestMethod = (url: any, contentType: any, data: any) => {
 
 // PUT request by ID
 export const updateRequest = (
-  url: any,
-  id: any,
+  url: string,
+  id: string,
   data: any,
-  contentType: any
+  contentType: string
 ) => {
   const updatedUrl = `${url}/${id}`; // Append the ID to the URL
-  return getinitialized(contentType)
-    .put(updatedUrl, data, contentType) // Use put() for HTTP PUT requests or patch() for HTTP PATCH requests
+  return getInitialized(contentType)
+    .put(updatedUrl, data) // Use put() for HTTP PUT requests or patch() for HTTP PATCH requests
     .catch((error: any) => {
       console.log(error);
     });
 };
 
 // DELETE request by ID
-export const deleteRequest = (url: any, id: any, contentType: any) => {
+export const deleteRequest = (
+  url: string,
+  id: string,
+  contentType: string
+) => {
   const deleteUrl = `${url}/${id}`; // Append the ID to the URL
-  return getinitialized(contentType)
-    .delete(deleteUrl, contentType)
+  return getInitialized(contentType)
+    .delete(deleteUrl)
     .catch((error: any) => {
       console.log(error);
     });
 };
-
-
-
