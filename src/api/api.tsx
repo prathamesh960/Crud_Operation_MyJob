@@ -80,3 +80,6 @@ export const deleteRequest = (url: any, id: any, contentType: any) => {
       console.log(error);
     });
 };
+
+
+
